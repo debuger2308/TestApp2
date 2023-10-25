@@ -4,7 +4,7 @@ import Link from "next/link"
 import { useEffect, useState } from "react"
 
 export default function Home() {
-    const isUserAuth = JSON.parse(localStorage.getItem("TestApp/login-info") || '')
+    const isUserAuth = JSON.parse(window.localStorage.getItem("TestApp/login-info") || '')
 
 
     const [errorMsg, setErrorMsg] = useState('')
@@ -51,7 +51,7 @@ export default function Home() {
                             <button 
                             className="login__authed-btn"
                             onClick={()=>{
-                                localStorage.setItem("TestApp/login-info", JSON.stringify({}))
+                                window.localStorage.setItem("TestApp/login-info", JSON.stringify({}))
                                 setIsAuth(false)
                             }}>Sign out</button>
                         </div>
@@ -75,7 +75,7 @@ export default function Home() {
                                     else setErrorMsg('Sorry, unexpected error')
                                 }
                                 else {
-                                    localStorage.setItem("TestApp/login-info", JSON.stringify({ username: username, password: password }))
+                                    window.localStorage.setItem("TestApp/login-info", JSON.stringify({ username: username, password: password }))
                                     window.location.replace('/table')
 
                                 }

@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 
 
 const Table = () => {
-    const isUserAuth = JSON.parse(localStorage.getItem("TestApp/login-info") || '')
+    const isUserAuth = JSON.parse(window.localStorage.getItem("TestApp/login-info") || '')
 
     const [isAuth, setIsAuth] = useState(false)
     const [isLoadLoginReq, setIsLoadLoginReq] = useState(true)
