@@ -60,6 +60,7 @@ const Table = () => {
             }
         }
         if(JSON.stringify(isUserAuth) !== '{}') isAuthHandler()
+        else setIsLoadLoginReq(false)
     }, [isUserAuth])
 
     return (

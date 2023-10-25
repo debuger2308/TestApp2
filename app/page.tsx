@@ -8,8 +8,6 @@ export default function Home() {
 
     const [isUserAuth, setIsUserAuth] = useState({})
 
-
-
     const [errorMsg, setErrorMsg] = useState('')
 
     const [isLoadSubmitReq, setIsLoadSubmitReq] = useState(false)
@@ -38,6 +36,7 @@ export default function Home() {
             setIsLoadLoginReq(false)
         }
         if (JSON.stringify(isUserAuth) !== '{}') isAuthHandler()
+        else setIsLoadLoginReq(false)
     }, [isUserAuth])
 
     return (
