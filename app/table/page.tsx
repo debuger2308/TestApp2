@@ -31,7 +31,7 @@ const Table = () => {
     }
 
     useEffect(()=>{
-        setIsUserAuth(JSON.parse(localStorage.getItem("TestApp/login-info") || ''))
+        setIsUserAuth(JSON.parse(localStorage.getItem("TestApp/login-info") || '{}'))
     },[])
 
     useEffect(() => {

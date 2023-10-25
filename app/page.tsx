@@ -21,7 +21,7 @@ export default function Home() {
     const [isAuth, setIsAuth] = useState(false)
 
     useEffect(()=>{
-        setIsUserAuth(JSON.parse(localStorage.getItem("TestApp/login-info") || ''))
+        setIsUserAuth(JSON.parse(localStorage.getItem("TestApp/login-info") || '{}'))
     },[])
 
     useEffect(() => {
