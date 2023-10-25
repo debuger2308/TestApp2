@@ -4,7 +4,7 @@ import Link from "next/link"
 import { useEffect, useState } from "react"
 
 export default function Home() {
-    const isUserAuth = JSON.parse(window.localStorage.getItem("TestApp/login-info") || '')
+    const isUserAuth = JSON.parse(localStorage.getItem("TestApp/login-info") || '')
 
 
     const [errorMsg, setErrorMsg] = useState('')
@@ -16,7 +16,7 @@ export default function Home() {
     const [password, setPassword] = useState('')
 
     const [isAuth, setIsAuth] = useState(false)
-    
+
 
     useEffect(() => {
         async function isAuthHandler() {
@@ -39,21 +39,21 @@ export default function Home() {
         <main className="main-login">
 
             {
-                false
+                isLoadLoginReq
                     ? <div className="login__loading">
                         <span className={isLoadLoginReq ? "loader loader--active login__loader" : "loader login__loader"}></span>
                         <h1 className="loading__title">Loading...</h1>
                     </div>
-                    : false
+                    : isAuth
                         ? <div className="login__authed">
                             <h1>You already authenticated</h1>
                             <Link href="/table" className="login__authed-link">To table page <span className="authed-link__arrow">{"->"}</span></Link>
-                            <button 
-                            className="login__authed-btn"
-                            onClick={()=>{
-                                window.localStorage.setItem("TestApp/login-info", JSON.stringify({}))
-                                setIsAuth(false)
-                            }}>Sign out</button>
+                            <button
+                                className="login__authed-btn"
+                                onClick={() => {
+                                    if (!window) localStorage.setItem("TestApp/login-info", JSON.stringify({}))
+                                    setIsAuth(false)
+                                }}>Sign out</button>
                         </div>
                         : <form
                             className="auth-form login__form"
@@ -75,8 +75,10 @@ export default function Home() {
                                     else setErrorMsg('Sorry, unexpected error')
                                 }
                                 else {
-                                    window.localStorage.setItem("TestApp/login-info", JSON.stringify({ username: username, password: password }))
-                                    window.location.replace('/table')
+                                    if (!window) {
+                                        localStorage.setItem("TestApp/login-info", JSON.stringify({ username: username, password: password }))
+                                        location.replace('/table')
+                                    }
 
                                 }
 
