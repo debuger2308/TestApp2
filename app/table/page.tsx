@@ -39,7 +39,9 @@ const Table = () => {
     }, [paginCount])
 
     useEffect(() => {
+        setIsLoadLoginReq(true)
         async function isAuthHandler() {
+            
             const res = await fetch('https://technical-task-api.icapgroupgmbh.com/api/login/', {
                 method: "POST",
                 headers: {
@@ -57,10 +59,8 @@ const Table = () => {
                 setIsLoadLoginReq(false)
             }
         }
-
-
-        isAuthHandler()
-    }, [])
+        if(JSON.stringify(isUserAuth) !== '{}') isAuthHandler()
+    }, [isUserAuth])
 
     return (
         <main className="main-table">

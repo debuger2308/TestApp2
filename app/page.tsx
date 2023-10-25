@@ -7,7 +7,7 @@ export default function Home() {
 
 
     const [isUserAuth, setIsUserAuth] = useState({})
-    
+
 
 
     const [errorMsg, setErrorMsg] = useState('')
@@ -20,9 +20,9 @@ export default function Home() {
 
     const [isAuth, setIsAuth] = useState(false)
 
-    useEffect(()=>{
+    useEffect(() => {
         setIsUserAuth(JSON.parse(localStorage.getItem("TestApp/login-info") || '{}'))
-    },[])
+    }, [])
 
     useEffect(() => {
         async function isAuthHandler() {
@@ -37,7 +37,7 @@ export default function Home() {
             else setIsAuth(false)
             setIsLoadLoginReq(false)
         }
-        isAuthHandler()
+        if (JSON.stringify(isUserAuth) !== '{}') isAuthHandler()
     }, [isUserAuth])
 
     return (
