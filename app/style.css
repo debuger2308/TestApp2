@@ -1,0 +1,228 @@
+/*---Global Styles---*/
+.loader {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    border: 5px dotted #0083ff;
+    border-radius: 50%;
+    display: none;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+}
+
+.loader--active {
+    display: block;
+}
+
+@keyframes rotation {
+    0% {
+        transform: translateY(-50%) rotate(0deg);
+    }
+
+    100% {
+        transform: translateY(-50%) rotate(360deg);
+    }
+}
+
+
+/*---Login Page ---*/
+.main-login {
+    text-align: center;
+}
+
+.login__authed {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.login__authed-link {
+    font-size: 24px;
+    text-decoration: none;
+    color: #7e7e7e;
+    position: relative;
+}
+
+.login__authed-link:hover .authed-link__arrow {
+    right: -45px;
+}
+
+.authed-link__arrow {
+    transition: all .3s;
+    position: absolute;
+    width: 30px;
+    right: -35px;
+}
+
+.login__authed-btn {
+    width: 100px;
+    cursor: pointer;
+    padding: 5px;
+    font-size: 20px;
+    border-radius: 5px;
+    border: 1px solid #7e7e7e;
+}
+
+.login__authed-btn:hover {
+    background-color: unset;
+    border: 1px solid #131313;
+}
+
+.login__form {
+    margin-top: 100px;
+}
+
+.login__loading {
+    display: inline-block;
+    margin-top: 50px;
+    position: relative;
+    text-align: center;
+}
+
+.login__loader {
+    width: 50px;
+    height: 50px;
+    left: -60px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: 7px dotted #0083ff;
+}
+
+.loading__title {
+    font-size: 42px;
+    display: inline-block;
+    text-align: center;
+}
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.auth-form__input {
+    border-radius: 5px;
+    padding: 5px;
+    margin-top: 10px;
+    width: 250px;
+    font-size: 24px;
+    border: 1px solid #7e7e7e;
+}
+
+.auth-form__input::placeholder {
+    font-size: 20px;
+}
+
+.auth-form__error-msg {
+    color: brown;
+}
+
+.auth-form__btn-wrapper {
+    margin-top: 15px;
+    position: relative;
+}
+
+.auth-form__login-btn {
+    width: 100px;
+    cursor: pointer;
+    padding: 5px;
+    font-size: 20px;
+    border-radius: 5px;
+    border: 1px solid #7e7e7e;
+}
+
+.auth-form__login-btn:hover {
+    background-color: unset;
+    border: 1px solid #131313;
+}
+
+.auth-form__loader {
+    left: -40px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/*---Tavble Page ---*/
+.main-table {
+    text-align: center;
+}
+
+.table {
+    margin: 0 auto;
+    max-width: 900px;
+    margin-top: 30px;
+    overflow-x: scroll;
+    display: block;
+    border-spacing: 10px;
+}
+
+.table__authed {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+.table__authed-link {
+    font-size: 24px;
+    text-decoration: none;
+    color: #7e7e7e;
+    position: relative;
+}
+
+.table__authed-link:hover .table-link__arrow {
+    right: -45px;
+}
+.table-link__arrow{
+    transition: all .3s;
+    position: absolute;
+    width: 30px;
+    right: -35px;
+}
+
+.table-cell {
+    word-wrap: break-word;
+    max-width: 200px;
+    min-width: 100px;
+    padding: 5px;
+}
+
+.table-cell__btn {
+    text-align: center;
+
+}
+
+.table-btns {
+    text-align: end;
+    min-width: auto;
+}
+
+.table-button {
+    cursor: pointer;
+}
+
+.table-input {
+    font-size: 16px;
+}
+
+.table__pagination{
+    margin-top: 20px;
+    display: inline-block;
+}
+/*---Tavble Page ---*/
+
+.pagination {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    max-width: 500px;
+    gap: 5px;
+}
+.pagination__point {
+    padding: 5px;
+    cursor: pointer;
+    border: 1px solid #a8a8a8;
+}
+.pagination__point--active{
+    border: 1px solid #000;
+}

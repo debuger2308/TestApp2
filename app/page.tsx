@@ -1,95 +1,123 @@
-import Image from 'next/image'
-import styles from './page.module.css'
+"use client"
+
+import Link from "next/link"
+import { useEffect, useState } from "react"
 
 export default function Home() {
-  return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
+    const isUserAuth = JSON.parse(localStorage.getItem("TestApp/login-info") || '')
 
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
 
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
+    const [errorMsg, setErrorMsg] = useState('')
 
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
+    const [isLoadSubmitReq, setIsLoadSubmitReq] = useState(false)
+    const [isLoadLoginReq, setIsLoadLoginReq] = useState(true)
 
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore the Next.js 13 playground.</p>
-        </a>
+    const [username, setUsername] = useState('')
+    const [password, setPassword] = useState('')
 
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  )
+    const [isAuth, setIsAuth] = useState(false)
+    
+
+    useEffect(() => {
+        async function isAuthHandler() {
+            const res = await fetch('https://technical-task-api.icapgroupgmbh.com/api/login/', {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(isUserAuth)
+            },)
+            if (res.status === 200) setIsAuth(true)
+            else setIsAuth(false)
+            setIsLoadLoginReq(false)
+        }
+        isAuthHandler()
+    }, [])
+
+    return (
+
+        <main className="main-login">
+
+            {
+                false
+                    ? <div className="login__loading">
+                        <span className={isLoadLoginReq ? "loader loader--active login__loader" : "loader login__loader"}></span>
+                        <h1 className="loading__title">Loading...</h1>
+                    </div>
+                    : false
+                        ? <div className="login__authed">
+                            <h1>You already authenticated</h1>
+                            <Link href="/table" className="login__authed-link">To table page <span className="authed-link__arrow">{"->"}</span></Link>
+                            <button 
+                            className="login__authed-btn"
+                            onClick={()=>{
+                                localStorage.setItem("TestApp/login-info", JSON.stringify({}))
+                                setIsAuth(false)
+                            }}>Sign out</button>
+                        </div>
+                        : <form
+                            className="auth-form login__form"
+                            onSubmit={async (event) => {
+                                event.preventDefault()
+                                setIsLoadSubmitReq(true)
+                                const res = await fetch('https://technical-task-api.icapgroupgmbh.com/api/login/', {
+                                    method: "POST",
+                                    headers: {
+                                        "Content-Type": "application/json",
+                                    },
+                                    body: JSON.stringify({ username: username, password: password })
+                                },)
+                                console.log(res);
+                                if (res.status !== 200) {
+                                    if (res.status === 401) {
+                                        setErrorMsg('Wrong username or password')
+                                    }
+                                    else setErrorMsg('Sorry, unexpected error')
+                                }
+                                else {
+                                    localStorage.setItem("TestApp/login-info", JSON.stringify({ username: username, password: password }))
+                                    window.location.replace('/table')
+
+                                }
+
+                                setIsLoadSubmitReq(false)
+                            }}
+                        >
+                            <input
+                                value={username}
+                                onChange={(e) => {
+                                    setUsername(e.currentTarget.value)
+                                }}
+                                type="text"
+                                className="auth-form__input"
+                                placeholder="Username"
+                                required
+                            />
+                            <input
+                                value={password}
+                                onChange={(e) => {
+                                    setPassword(e.currentTarget.value)
+                                }}
+                                type="password"
+                                className="auth-form__input"
+                                placeholder="Password"
+                                required
+                            />
+                            <strong className="auth-form__error-msg">{errorMsg}</strong>
+                            <div className="auth-form__btn-wrapper">
+                                <span className={isLoadSubmitReq ? "loader loader--active auth-form__loader" : "loader auth-form__loader"}></span>
+                                <button
+                                    disabled={isLoadSubmitReq}
+                                    className="auth-form__login-btn">
+                                    Log In
+                                </button>
+                            </div>
+
+                        </form>
+            }
+
+
+
+        </main>
+    )
 }
