@@ -57,7 +57,7 @@ export default function Home() {
                             <button
                                 className="login__authed-btn"
                                 onClick={() => {
-                                    if (!window) localStorage.setItem("TestApp/login-info", JSON.stringify({}))
+                                    if (typeof window !== 'undefined') localStorage.setItem("TestApp/login-info", JSON.stringify({}))
                                     setIsAuth(false)
                                 }}>Sign out</button>
                         </div>
@@ -81,7 +81,7 @@ export default function Home() {
                                     else setErrorMsg('Sorry, unexpected error')
                                 }
                                 else {
-                                    if (!window) {
+                                    if (typeof window !== 'undefined') {
                                         localStorage.setItem("TestApp/login-info", JSON.stringify({ username: username, password: password }))
                                         location.replace('/table')
                                     }
