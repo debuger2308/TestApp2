@@ -9,7 +9,10 @@ import { useEffect, useState } from "react";
 
 
 const Table = () => {
-    const isUserAuth = JSON.parse(window.localStorage.getItem("TestApp/login-info") || '')
+    const [isUserAuth, setIsUserAuth] = useState({})
+
+
+
 
     const [isAuth, setIsAuth] = useState(false)
     const [isLoadLoginReq, setIsLoadLoginReq] = useState(true)
@@ -26,6 +29,10 @@ const Table = () => {
                 setTableData(result.results)
             })
     }
+
+    useEffect(()=>{
+        setIsUserAuth(JSON.parse(localStorage.getItem("TestApp/login-info") || ''))
+    },[])
 
     useEffect(() => {
         getTableData()
