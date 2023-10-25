@@ -4,7 +4,10 @@ import Link from "next/link"
 import { useEffect, useState } from "react"
 
 export default function Home() {
-    const isUserAuth = JSON.parse(localStorage.getItem("TestApp/login-info") || '')
+
+
+    const [isUserAuth, setIsUserAuth] = useState({})
+    
 
 
     const [errorMsg, setErrorMsg] = useState('')
@@ -17,6 +20,9 @@ export default function Home() {
 
     const [isAuth, setIsAuth] = useState(false)
 
+    useEffect(()=>{
+        setIsUserAuth(JSON.parse(localStorage.getItem("TestApp/login-info") || ''))
+    },[])
 
     useEffect(() => {
         async function isAuthHandler() {
@@ -32,7 +38,7 @@ export default function Home() {
             setIsLoadLoginReq(false)
         }
         isAuthHandler()
-    }, [])
+    }, [isUserAuth])
 
     return (
 
